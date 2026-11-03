@@ -47,4 +47,3 @@ with mlflow.start_run():
 
 Path("models").mkdir(exist_ok=True)
 joblib.dump(model, "models/model.pkl")
-print("Run registrado en MLflow y modelo guardado en models/model.pkl")
