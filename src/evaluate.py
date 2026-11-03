@@ -18,4 +18,3 @@ metrics = {
     "root_sq_error": round(root_mean_squared_error(y, pred), 4),
 }
 Path("metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
-print(metrics)
