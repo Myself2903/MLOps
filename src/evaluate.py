@@ -5,7 +5,7 @@ from pathlib import Path
 import joblib
 import pandas as pd
 import yaml
-from sklearn.metrics import accuracy_score, f1_score
+from sklearn.metrics import mean_squared_error, root_mean_squared_error
 
 target = yaml.safe_load(open("params.yaml", encoding="utf-8"))["prepare"]["target"]
 
@@ -14,8 +14,7 @@ X, y = test.drop(columns=[target]), test[target]
 pred = joblib.load("models/model.pkl").predict(X)
 
 metrics = {
-    "accuracy": round(accuracy_score(y, pred), 4),
-    "f1_macro": round(f1_score(y, pred, average="macro"), 4),
+    "mean_error": round(mean_squared_error(y, pred), 4),
+    "root_sq_error": round(root_mean_squared_error(y, pred), 4),
 }
 Path("metrics.json").write_text(json.dumps(metrics, indent=2), encoding="utf-8")
-print(metrics)

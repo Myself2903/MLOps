@@ -1,0 +1,69 @@
+schema: '2.0'
+stages:
+  prepare:
+    cmd: python src/prepare.py
+    deps:
+    - path: data/raw/winequality-red.csv
+      hash: md5
+      md5: 2daeecee174368f8a33b82c8cccae3a5
+      size: 84199
+    - path: src/prepare.py
+      hash: md5
+      md5: c5dbec84aa8208e11a961cdebf321a60
+      size: 1330
+    params:
+      params.yaml:
+        prepare:
+          target: quality
+          drop_columns: []
+          test_size: 0.2
+          random_state: 42
+    outs:
+    - path: data/prepared
+      hash: md5
+      md5: df780f15a1be34332f6ff7a4f8d28ee5.dir
+      size: 93746
+      nfiles: 2
+  train:
+    cmd: python src/train.py
+    deps:
+    - path: data/prepared
+      hash: md5
+      md5: df780f15a1be34332f6ff7a4f8d28ee5.dir
+      size: 93746
+      nfiles: 2
+    - path: src/train.py
+      hash: md5
+      md5: a1542f5301685df7fcdf5f694f943ac6
+      size: 1599
+    params:
+      params.yaml:
+        train:
+          n_estimators: 500
+          max_depth: 300
+    outs:
+    - path: models/model.pkl
+      hash: md5
+      md5: ca09fc0de9c86c74ceede957ccea93af
+      size: 17158801
+  evaluate:
+    cmd: python src/evaluate.py
+    deps:
+    - path: data/prepared
+      hash: md5
+      md5: df780f15a1be34332f6ff7a4f8d28ee5.dir
+      size: 93746
+      nfiles: 2
+    - path: models/model.pkl
+      hash: md5
+      md5: ca09fc0de9c86c74ceede957ccea93af
+      size: 17158801
+    - path: src/evaluate.py
+      hash: md5
+      md5: 0a8152ddfb2a5a4a1b58fa0cc3cc39cd
+      size: 726
+    outs:
+    - path: metrics.json
+      hash: md5
+      md5: 79760aff71a2c320165a3c2b4bb2fdb5
+      size: 56
