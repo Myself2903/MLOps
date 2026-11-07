@@ -10,3 +10,4 @@ mlartifacts/
 .vscode
 data/prepared
 dvc_db
+.env
