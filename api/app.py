@@ -38,4 +38,4 @@ def predict(vino: Vino):
     # (drop_first) y rellena con 0 las columnas que el cliente no activa.
     X = pd.get_dummies(pd.DataFrame([vino.model_dump()]), dtype=int)
     X = X.reindex(columns=modelo.feature_names_in_, fill_value=0)
-    return {"prediccion": str(modelo.predict(X)[0])}
+    return {"prediccion": int(modelo.predict(X)[0])}
