@@ -1,5 +1,7 @@
 """Etapa train: entrena, registra el run en MLflow y guarda models/model.pkl."""
 from pathlib import Path
+from dotenv import load_dotenv
+import os
 
 import joblib
 import mlflow
@@ -8,6 +10,9 @@ import pandas as pd
 import yaml
 from sklearn.ensemble import RandomForestRegressor
 from sklearn.metrics import mean_squared_error, root_mean_squared_error
+
+load_dotenv()
+MLFLOW_TRACKING_URI = os.getenv("MLFLOW_TRACKING_URI", "sqlite:///mlflow.db")
 
 params = yaml.safe_load(open("params.yaml", encoding="utf-8"))
 target = params["prepare"]["target"]
@@ -19,7 +24,7 @@ test = pd.read_csv("data/prepared/test.csv")
 X_train, y_train = train.drop(columns=[target]), train[target]
 X_test, y_test = test.drop(columns=[target]), test[target]
 
-mlflow.set_tracking_uri("sqlite:///mlflow.db")
+mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
 mlflow.set_experiment(cfg["experiment"])
 
 with mlflow.start_run():

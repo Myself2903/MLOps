@@ -1,4 +1,6 @@
 [core]
-    remote = local
+    remote = dagshub
 ['remote "local"']
     url = ../data/raw/dvc_db
+['remote "dagshub"']
+    url = https://dagshub.com/Myself2903/MLOps.dvc
