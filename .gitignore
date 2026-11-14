@@ -11,3 +11,6 @@ mlartifacts/
 data/prepared
 dvc_db
 .env
+
+logs/
+reports/
