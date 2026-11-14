@@ -5,8 +5,8 @@ from pathlib import Path
 import joblib
 import pandas as pd
 from fastapi import FastAPI
-from prometheus_fastapi_instrumentator import Instrumentator
 from prometheus_client import REGISTRY, Counter
+from prometheus_fastapi_instrumentator import Instrumentator
 from pydantic import BaseModel
 
 modelo = joblib.load(Path(os.getenv("MODEL_DIR", "models")) / "model.pkl")
