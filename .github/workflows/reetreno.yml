@@ -1,5 +1,7 @@
 name: Reentreno
 on:
+  push:
+    branches: [feat/reentreno, entrega/e5]
   schedule:
     - cron: "0 6 * * 1"   # cada lunes a las 06:00 UTC
   workflow_dispatch:       # y también con un botón
