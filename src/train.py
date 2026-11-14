@@ -24,31 +24,31 @@ test = pd.read_csv("data/prepared/test.csv")
 X_train, y_train = train.drop(columns=[target]), train[target]
 X_test, y_test = test.drop(columns=[target]), test[target]
 
-mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
-mlflow.set_experiment(cfg["experiment"])
+#mlflow.set_tracking_uri(MLFLOW_TRACKING_URI)
+#mlflow.set_experiment(cfg["experiment"])
 
-with mlflow.start_run():
-    mlflow.log_params(p)
+#with mlflow.start_run():
+ #   mlflow.log_params(p)
 
-    model = RandomForestRegressor(
-        n_estimators=p["n_estimators"],
-        max_depth=p["max_depth"],
-        random_state=params["prepare"]["random_state"],
-    )
-    model.fit(X_train, y_train)
+model = RandomForestRegressor(
+    n_estimators=p["n_estimators"],
+    max_depth=p["max_depth"],
+    random_state=params["prepare"]["random_state"],
+)
+model.fit(X_train, y_train)
 
-    pred = model.predict(X_test)
-    mlflow.log_metrics({
-        "mean_sq": mean_squared_error(y_test, pred),
-        "root_sq_error": root_mean_squared_error(y_test, pred),
-    })
-    mlflow.sklearn.log_model(
-        model,
-        name="model",
-        registered_model_name=cfg["model_name"],
-        input_example=X_train.head(3),
-        serialization_format="cloudpickle",
-    )
+pred = model.predict(X_test)
+  #  mlflow.log_metrics({
+   #     "mean_sq": mean_squared_error(y_test, pred),
+    #    "root_sq_error": root_mean_squared_error(y_test, pred),
+    #})
+    #mlflow.sklearn.log_model(
+    #    model,
+     #   name="model",
+      #  registered_model_name=cfg["model_name"],
+       # input_example=X_train.head(3),
+        #serialization_format="cloudpickle",
+ #   )
 
 Path("models").mkdir(exist_ok=True)
 joblib.dump(model, "models/model.pkl")

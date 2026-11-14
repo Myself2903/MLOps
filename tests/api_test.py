@@ -60,6 +60,7 @@ def wine(tmp_path, monkeypatch):
 
     joblib.dump(RandomForestRegressor().fit(X, y), tmp_path / "model.pkl")
     monkeypatch.setenv("MODEL_DIR", str(tmp_path))
+    monkeypatch.setenv("LOGS_DIR", str(tmp_path / "logs"))
     import api.app as modulo
     importlib.reload(modulo)
     return TestClient(modulo.app)
