@@ -5,9 +5,9 @@ from pathlib import Path
 import joblib
 import pandas as pd
 from fastapi import FastAPI
-from pydantic import BaseModel
 from prometheus_fastapi_instrumentator import Instrumentator
 from prometheus_client import REGISTRY, Counter
+from pydantic import BaseModel
 
 modelo = joblib.load(Path(os.getenv("MODEL_DIR", "models")) / "model.pkl")
 app = FastAPI(title="API de predicción de calidad de vino")
